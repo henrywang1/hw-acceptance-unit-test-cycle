@@ -1,0 +1,18 @@
+%h2 Similar Movies of #{@select_movie.title}
+= form_tag movies_path, :method => :get do
+
+  %table#movies.table.table-striped.col-md-12
+    %theadr
+      %tr
+        %th Title
+        %th Rating
+        %th date
+        %th director
+    %tbody
+      - @movies.each do |movie|
+        %tr
+          %td= movie.title
+          %td= movie.rating
+          %td= movie.release_date
+          %td= movie.director
+      = link_to 'Back to movie list', movies_path

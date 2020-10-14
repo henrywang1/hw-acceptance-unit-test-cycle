@@ -32,7 +32,13 @@ class MoviesController < ApplicationController
     end
     @movies = Movie.where(rating: @selected_ratings.keys).order(ordering)
   end
-
+  
+  def similar
+    @id = params[:id]
+    @select_movie = @movie = Movie.find(@id)
+    @movies = Movie.where(["director = '%s' and id != '%s'", @select_movie.director, @id])
+  end
+  
   def new
     # default: render 'new' template
   end
