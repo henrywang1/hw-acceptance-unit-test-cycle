@@ -36,7 +36,12 @@ class MoviesController < ApplicationController
   def similar
     @id = params[:id]
     @select_movie = @movie = Movie.find(@id)
-    @movies = Movie.where(["director = '%s' and id != '%s'", @select_movie.director, @id])
+    if @movie && @movie.director.present?
+      @movies = Movie.where(["director = '%s' and id != '%s'", @select_movie.director, @id])
+    else
+      flash[:notice] = "\'#{@movie.title}\' has no director info"
+      redirect_to movies_path and return
+    end
   end
   
   def new
